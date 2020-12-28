@@ -65,6 +65,11 @@ class MeetingComponentV2(base.BaseComponent):
             kwargs["start_time"] = util.date_to_str(kwargs["start_time"])
         return self.patch_request("/meetings/{}".format(kwargs.get("id")), data=kwargs)
 
+    def update_status(self, **kwargs):
+        util.require_keys(kwargs, "id")
+        util.require_keys(kwargs, "action")
+        return self.put_request("/meetings/{}/status".format(kwargs.get("id")), data=kwargs)
+
     def delete(self, **kwargs):
         util.require_keys(kwargs, "id")
         return self.delete_request(
