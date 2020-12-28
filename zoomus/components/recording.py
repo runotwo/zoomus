@@ -46,8 +46,10 @@ class RecordingComponentV2(base.BaseComponent):
             "/meetings/{}/recordings".format(kwargs.get("meeting_id")), params=kwargs
         )
 
-    def delete(self, **kwargs):
+    def start(self, **kwargs):
         util.require_keys(kwargs, "meeting_id")
-        return self.delete_request(
-            "/meetings/{}/recordings".format(kwargs.get("meeting_id")), params=kwargs
-        )
+        return self.patch_request("/live_meetings/{}/events".format(kwargs.get("meeting_id")), data={"method": "recording.start"})
+
+    def stop(self, **kwargs):
+        util.require_keys(kwargs, "meeting_id")
+        return self.patch_request("/live_meetings/{}/events".format(kwargs.get("meeting_id")), data={"method": "recording.stop"})
